@@ -1,33 +1,30 @@
-drop procedure if exists Print1;
+
+drop procedure if exists string2;
+
 delimiter $
-CREATE  PROCEDURE Print1() 
-
-
+create procedure string2()
 BEGIN
-	declare _ename,_job varchar(30);
-	declare _sal,_deptno int;
-	declare count1 int;
-	declare c1 cursor for select ename,job,sal,deptno from emp;
-    
-
+     declare i int;
+	 set i:=1;
+	 drop table if exists t;
+	create table t(id int auto_increment primary key,message varchar(30));
+	 l1:loop
+	if i <=10 then
 	
-	set count1 := 0;
-	open c1;
-		
-		l1 : loop
-		
-		if count1<=5  then 
-			fetch c1 into _ename,_job,_sal,_deptno;
+		if (i%2)=0 then 
 			
-			select _ename "Name",_job "Job",_sal "Sal",_deptno "deptno";
-			
-			set count1 := count1 + 1;
+			insert into t(message) values("id is even");
 		ELSE
-			leave l1;
-		end if;
-		end loop l1;
-			
 	
-	close c1;
-END $
+			insert into t(message) values("id is odd");
+		end if;
+		set i:=i+1;
+	
+	else
+		leave l1;
+	end if;
+	
+	end loop l1;
+	select * from t;
+end $
 delimiter ;
