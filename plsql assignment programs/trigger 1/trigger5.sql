@@ -1,10 +1,12 @@
 
-drop trigger if exists update_studentDetails;
+drop trigger if exists trigger5;
 delimiter $
 create trigger trigger5 before insert on student for each row
 BEGIN
-	
-	insert into student_log values(old.ID,old.namefirst,old.namelast,old.DOB,old.emailID);
+	declare result varchar(30);
+	if dayname(now()='Sunday') then
+		select "Today is Sunday, Data will not be inserted!" into result;
+	end if;
 end $
 delimiter ;
 
